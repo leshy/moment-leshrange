@@ -1,6 +1,6 @@
 #autocompile
 require! {
-  leshdash: { assign }
+  leshdash: { assign, zipWith }
   moment
   'moment-range': Range
 }
@@ -29,8 +29,12 @@ assign Range::, do
   format: (format) -> @map (.format format)
 
   transform: (updateStart, updateEnd) ->
-    if not updateEnd then updateEnd = updateStart
-    new Range (updateStart @start.clone!), (updateEnd @end.clone!)
+    
+    new Range zipWith do
+      [ updateStart, updateEnd or updateStart ]
+      [ @start, @end ]
+      
+      (cb, m) -> cb m.clone!
       
 
 module.exports = Range
