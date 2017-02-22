@@ -6,8 +6,6 @@ require! {
 }
 
 assign Range::, do
-  test: -> 3
-  
   zoomIn: (n, t) ->
     if not n then n = @diff! / 4
     @transform (.add n, t), (.subtract n, t)
@@ -35,6 +33,7 @@ assign Range::, do
       [ @start, @end ]
       
       (cb, m) -> cb m.clone!
-      
 
+  duration: -> moment.duration @diff!
+  
 module.exports = Range
